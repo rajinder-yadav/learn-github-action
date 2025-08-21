@@ -36,6 +36,8 @@ jobs:
           ls -la
           printf 'Disk df'
           df
+          printf 'Path:\n'
+          echo $PATH
           printf 'Is Node.js installed?\n'
           node -v
           printf 'Is npm installed?\n'
