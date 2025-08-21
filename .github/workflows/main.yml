@@ -38,8 +38,6 @@ jobs:
           node -v
           printf 'Is npm installed?\n'
           npm -v
-          printf 'Is pnpm installed?\n'
-          pnpm -v
           printf 'What version of bash\n'
           bash --version
           printf 'Who am I?\n'
