@@ -12,7 +12,7 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-      inputs:
+    inputs:
       file_url:
         description: 'URL of the file to fetch'
         required: true
