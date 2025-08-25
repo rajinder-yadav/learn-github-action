@@ -56,7 +56,8 @@ jobs:
 
       - name: Build TypeScript code
         run: |
-          cd actions
+          pushd actions/remote-file-fetch
           npm i
           npm run build
           node ./dist/main.js
+          popd
