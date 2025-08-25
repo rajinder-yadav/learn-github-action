@@ -54,70 +54,9 @@ jobs:
           printf 'Environment variables\n'
           env
 
-
-  fetch-file:
-    runs-on: ubuntu-latest
-    steps:
-      # 2. Checkout the repository (optional, but often useful)
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # 3. Try to "ping" the file URL until it's available (or max retries reached)
-      - name: Check if file is available
+      - name: Build TypeScript code
         run: |
-          URL="${{ inputs.file_url }}"
-          MAX_RETRIES=${{ inputs.max_retries }}
-          RETRY_DELAY=10 # seconds between tries
-
-          echo "Checking if $URL is available..."
-          for i in $(seq 1 $MAX_RETRIES); do
-            # Use curl to send a HEAD request (fetches headers only, not the whole file)
-            if curl --output /dev/null --silent --head --fail "$URL"; then
-              echo "✅ Success! File is available."
-              exit 0
-            else
-              echo "⏳ Attempt $i/$MAX_RETRIES failed. Retrying in $RETRY_DELAY seconds..."
-              if [ $i -lt $MAX_RETRIES ]; then
-                sleep $RETRY_DELAY
-              fi
-            fi
-          done
-
-          echo "❌ Error: File was not available after $MAX_RETRIES attempts."
-          exit 1
-
-      # 4. Download the file now that we know it's available
-      - name: Download file
-        run: |
-          # Extract the filename from the URL
-          FILENAME=$(basename "${{ inputs.file_url }}")
-          # Download the file using curl, saving it with its original name
-          curl -s -O "${{ inputs.file_url }}"
-          echo "File downloaded as: $FILENAME"
-
-      # 5. Get and output the file size
-      - name: Output file size
-        run: |
-          FILENAME=$(basename "${{ inputs.file_url }}")
-          if [ -f "$FILENAME" ]; then
-            # Get the size in bytes
-            SIZE_BYTES=$(wc -c < "$FILENAME" | tr -d ' ')
-            # Convert to human-readable format (KB, MB)
-            SIZE_HR=$(numfmt --to=iec-i --suffix=B $SIZE_BYTES)
-            echo "📁 File: $FILENAME"
-            echo "💾 Size: $SIZE_BYTES bytes ($SIZE_HR)"
-            # You can also set this as an output for use in other steps/jobs
-            echo "file_size_bytes=$SIZE_BYTES" >> $GITHUB_OUTPUT
-            echo "file_size_human=$SIZE_HR" >> $GITHUB_OUTPUT
-          else
-            echo "Error: File $FILENAME was not found."
-            exit 1
-          fi
-
-      # 6. (Optional) Upload the file as an artifact to download from the Actions UI
-      - name: Upload file as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: downloaded-file
-          path: ${{ github.workspace }}/$(basename "${{ inputs.file_url }}")
-          
+          cd actions
+          npm ci
+          npm run build
+          node ./dist/main.js

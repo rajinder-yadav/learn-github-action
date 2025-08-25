@@ -1,0 +1,44 @@
+{
+  "name": "file-downloader",
+  "version": "0.1.0",
+  "description": "TypeScript Node.js starter",
+  "main": "./dist/main.js",
+  "exports": "./dist/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node ./dist/main.js",
+    "prebuild": "run-s clean format lint",
+    "build": "tsc",
+    "clean": "shx rm -rf ./dist",
+    "check": "tsc --noEmit",
+    "dev": "tsx watch src/main.ts",
+    "debug": "tsx watch --inspect-wait src/main.ts",
+    "format": "biome format --write ./src",
+    "lint": "pnpm eslint ./src",
+    "test:build": "tsc",
+    "pretest": "run-s clean test:build",
+    "test": "jest './dist/test'",
+    "test:coverage": "npm run test -- --coverage",
+    "up": "pnpm update --latest"
+  },
+  "keywords": [],
+  "author": "Rajinder Yadav <devguy.ca@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rajinder-yadav/typescript-node-starter"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.14",
+    "biome": "^0.3.3",
+    "eslint": "^9.23.0",
+    "jest": "^29.7.0",
+    "npm-run-all": "^4.1.5",
+    "shx": "^0.4.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0"
+  }
+}
