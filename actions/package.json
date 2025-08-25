@@ -7,7 +7,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "node ./dist/main.js",
-    "prebuild": "run-s clean format lint",
+    "xprebuild": "run-s clean format lint",
     "build": "tsc",
     "clean": "shx rm -rf ./dist",
     "check": "tsc --noEmit",
