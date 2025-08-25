@@ -57,6 +57,6 @@ jobs:
       - name: Build TypeScript code
         run: |
           cd actions
-          npm ci
+          npm i
           npm run build
           node ./dist/main.js
