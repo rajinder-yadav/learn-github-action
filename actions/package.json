@@ -14,12 +14,12 @@
     "dev": "tsx watch src/main.ts",
     "debug": "tsx watch --inspect-wait src/main.ts",
     "format": "biome format --write ./src",
-    "lint": "pnpm eslint ./src",
+    "lint": "npm eslint ./src",
     "test:build": "tsc",
     "pretest": "run-s clean test:build",
     "test": "jest './dist/test'",
     "test:coverage": "npm run test -- --coverage",
-    "up": "pnpm update --latest"
+    "up": "npm update --latest"
   },
   "keywords": [],
   "author": "Rajinder Yadav <devguy.ca@gmail.com>",
