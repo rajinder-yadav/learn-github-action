@@ -1,6 +1,4 @@
 import { writeFileSync } from 'node:fs';
-import { Readable } from 'node:stream';
-import { pipeline } from 'node:stream/promises';
 
 /**
  * Fetches a file and outputs its size using native Node.js fetch.
