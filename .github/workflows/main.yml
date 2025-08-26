@@ -61,7 +61,6 @@ jobs:
 
       - name: Build TypeScript code
         run: |
-          pushd actions/remote-file-fetch
           npm run build
 
       - name: Run Node script
