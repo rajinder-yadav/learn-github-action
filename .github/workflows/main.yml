@@ -54,10 +54,17 @@ jobs:
           printf 'Environment variables\n'
           env
 
-      - name: Build TypeScript code
+      - name: Install Node packages
         run: |
           pushd actions/remote-file-fetch
           npm i
+
+      - name: Build TypeScript code
+        run: |
+          pushd actions/remote-file-fetch
           npm run build
+
+      - name: Run Node script
+        run: |
           node ./dist/main.js
           popd
