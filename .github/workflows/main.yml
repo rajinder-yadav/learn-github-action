@@ -73,3 +73,6 @@ jobs:
           pushd actions/remote-file-fetch
           node ./dist/main.js
           popd
+
+      - name: List directory
+        run: ls -l

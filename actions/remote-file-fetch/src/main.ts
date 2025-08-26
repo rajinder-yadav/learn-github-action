@@ -4,10 +4,9 @@ import { writeFileSync } from 'node:fs';
  * Fetches a file and outputs its size using native Node.js fetch.
  * @param url - The URL of the file to fetch.
  */
-async function fetchFileSize(url: string): Promise<void> {
+async function fetchRemoteFile(url: string): Promise<void> {
   try {
     const response = await fetch(url);
-
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -48,5 +47,5 @@ function formatBytes(bytes: number): string {
 }
 
 // Example usage
-const fileUrl = process.env?.K6_JSLIB_S3_URL ?? 'xxxhttps://jslib.k6.io/aws/0.14.0/s3.js';
-fetchFileSize(fileUrl);
+const fileUrl = process.env?.K6_JSLIB_S3_URL ?? '';
+fetchRemoteFile(fileUrl);
