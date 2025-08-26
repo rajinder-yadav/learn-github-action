@@ -75,4 +75,4 @@ jobs:
           popd
 
       - name: List directory
-        run: ls -l
+        run: ls -l ./dist
