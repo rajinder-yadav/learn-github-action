@@ -58,12 +58,16 @@ jobs:
         run: |
           pushd actions/remote-file-fetch
           npm i
+          popd
 
       - name: Build TypeScript code
         run: |
+          pushd actions/remote-file-fetch
           npm run build
+          popd
 
       - name: Run Node script
         run: |
+          pushd actions/remote-file-fetch
           node ./dist/main.js
           popd
