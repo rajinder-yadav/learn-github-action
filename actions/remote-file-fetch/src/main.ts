@@ -48,5 +48,5 @@ function formatBytes(bytes: number): string {
 }
 
 // Example usage
-const fileUrl = process.env?.K6_JSLIB_S3_URL ?? 'https://jslib.k6.io/aws/0.14.0/s3.js';
+const fileUrl = process.env?.K6_JSLIB_S3_URL ?? 'xxxhttps://jslib.k6.io/aws/0.14.0/s3.js';
 fetchFileSize(fileUrl);
