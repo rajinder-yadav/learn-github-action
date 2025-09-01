@@ -23,6 +23,9 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Run a one-line script
         id: download-k6-files
         uses: ./github/actions/fetch-k6-libs

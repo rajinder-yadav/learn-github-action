@@ -1,5 +1,6 @@
 name: Fetch K6 library
 description: Download K6 lib files
+
 inputs:
   artifactory_url:
     description: BMO artifactory base URL
@@ -19,6 +20,7 @@ inputs:
 
 runs:
   using: "composite"
+
   steps:
     # - name: Get Artifactroy credentials
     #   id: get-artifactory-credentials
