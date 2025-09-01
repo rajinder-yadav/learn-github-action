@@ -54,7 +54,7 @@ runs:
       DIR=$(ls -d k6-*|head -n 1)
       if [[ -d $DIR/build ]]; then
         ls -l $DIR/build
-        echo "build_folder=$DIR/build"" >> $GITHUB_OUTPUT
+        echo "build_folder=$DIR/build" >> $GITHUB_OUTPUT
       else
         echo "build_folder=''">> $GITHUB_OUTPUT
       fi
