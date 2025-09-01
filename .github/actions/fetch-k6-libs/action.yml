@@ -57,7 +57,8 @@ runs:
       curl -LO ${{ inputs.k6_lib_tarball_url }}/v${{ steps.get_version.output.remote_version }}.tar.gz
       ls -l
       echo "Expanding K6 tarball download"
-      tar -xf v${{ steps.get_version.output.remote_version }}.tar.gz
+      echo "filename: " v${{ steps.get_version.output.remote_version }}.tar.gz
+      tar -xf *.tar.gz
       echo "Listing build artifacts"
       DIR=$(ls -d k6-jslib*|head -n 1)
       if [[ -d $DIR/build ]]; then
