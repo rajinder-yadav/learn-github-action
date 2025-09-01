@@ -63,8 +63,8 @@ runs:
   - name: Create a NPM package
     shell: bash
     run: |
-      echo ">> " ${{ steps.download_k6_tarball.output.build_folder }}
-      if [[ -n ${{ steps.download_k6_tarball.output.build_folder }} ]]; then
+      echo ">> " ${{ steps.download_k6_tarball.outputs.build_folder }}
+      if [[ -n ${{ steps.download_k6_tarball.outputs.build_folder }} ]]; then
         echo "Creating package.json file"
         mkdir npm-package
         cd npm-package
