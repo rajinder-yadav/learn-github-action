@@ -28,7 +28,7 @@ jobs:
 
       - name: Run a one-line script
         id: download-k6-files
-        uses: OWNER/actions/fetch-k6-libs@SHA
+        uses: ./.github/actions/fetch-k6-libs
         with:
           artifactory_url: $ARTIFACTORY_URL
           artifactory_repo: "k6-jslib-utils"
