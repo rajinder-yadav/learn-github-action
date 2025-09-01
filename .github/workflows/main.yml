@@ -33,5 +33,5 @@ jobs:
           artifactory_url: $ARTIFACTORY_URL
           artifactory_repo: "k6-jslib-utils"
           bmo_package_name: "@bmo-k6/k6-jslib-utils"
-          k6_lib_tarball_url: "https://github.com/grafana/k6-jslib-utils/archive/refs/tags/v1.4.0.tar.gz"
+          k6_lib_tarball_url: "https://github.com/grafana/k6-jslib-utils/archive/refs/tags/"
           k6_lib_api_url: "https://api.github.com/repos/grafana/k6-jslib-utils/releases/latest"

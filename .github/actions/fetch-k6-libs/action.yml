@@ -31,7 +31,7 @@ runs:
     id: get_version
     shell: bash
     run: |
-      current_version="0.1.0"
+      current_version="0.0.1"
       remote_version=$(curl -s ${{ inputs.k6_lib_api_url }} | jq -r ".tag_name")
       remote_version=${remote_version#v}
       printf "Current version: %s\n" $current_version
@@ -54,19 +54,24 @@ runs:
       mkdir download
       cd download
       echo "Downloading K6 libary tarball"
-      curl -LO ${{ inputs.k6_lib_tarball_url }}
+      curl -LO ${{ inputs.k6_lib_tarball_url }}/v${{ steps.get_version.output.remote_version }}.tar.gz
       ls -l
       echo "Expanding K6 tarball download"
-      tar -xf *.tar.gz
+      tar -xf v${{ steps.get_version.output.remote_version }}.tar.gz
       echo "Listing build artifacts"
-      DIR=$(ls -d k6-*|head -n 1)
+      DIR=$(ls -d k6-jslib*|head -n 1)
       if [[ -d $DIR/build ]]; then
         ls -l $DIR/build
         echo "build_folder=$DIR/build" >> $GITHUB_OUTPUT
+      elif [[ -d $DIR/dist ]]; then
+        echo "build_folder=$DIR/dist" >> $GITHUB_OUTPUT
+      elif [[ -f $DIR/index.js ]]; then
+        echo "build_folder=$DIR" >> $GITHUB_OUTPUT
+      elif [[ -f $DIR/src/httpx.js ]]; then
+        echo "build_folder=$DIR/src" >> $GITHUB_OUTPUT
       else
         echo "build_folder=''">> $GITHUB_OUTPUT
       fi
-
 
   - name: Create a NPM package
     shell: bash
