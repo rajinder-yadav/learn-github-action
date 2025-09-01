@@ -73,7 +73,7 @@ runs:
         {
           "name": "test",
           "version": $remove_version,
-          "description": "$remote_version",
+          "description": "BMO K6 wrapper library",
           "main": "index.js",
           "type": "commonjs"
         }
