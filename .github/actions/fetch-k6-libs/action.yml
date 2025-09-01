@@ -52,3 +52,29 @@ runs:
       echo "Listing build artifacts"
       DIR=$(ls -d k6-*|head -n 1)
       ls -l $DIR/build
+
+  - name: Create a NPM package
+    shell: bash
+    run: |
+      echo "Creating package.json file"
+      mkdir npm-package
+      cd npm-package
+      cat << EOF > package.json
+      {
+        "name": "test",
+        "version": ${{ steps.get_version.outputs.remote_version }},
+        "description": "",
+        "main": "index.js",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "keywords": [],
+        "author": "",
+        "license": "ISC",
+        "type": "commonjs"
+      }
+      EOF
+      echo "Displaying package.json"
+      cat package.json
+
+
