@@ -1,0 +1,38 @@
+name: Fetch K6 library
+description: Download K6 lib files
+inputs:
+  artifactory_url:
+    description: BMO artifactory base URL
+    required: true
+  artifactory_repo:
+    description: NPM repository name
+    required: true
+  bmo_package_name:
+    description: BMO scoped NPM package name
+    required: true
+  k6_lib_tarball_url:
+    description: K6 library Github URL
+    required: true
+  k6_lib_api_url:
+    description: K6 Github API repository info endpoint
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    # - name: Get Artifactroy credentials
+    #   id: get-artifactory-credentials
+    #   uses:
+    #   with:
+    #     secrets: |
+
+  - name: Get version info
+    id: get_version
+    shell: bash
+    run: |
+      current_version="0.1.0"
+      remote_version=(curl -s ${{ inputs.k6_lib_api_url }}) | jq -r ".tag_name"
+      printf "Current version: %s\n" $current_version
+      printf "Latest version: %s\n" $remote_version
+      echo "current_version=$current_version" > GITHUB_OUTPUT
+      echo "remote_version=$remote_version" > GITHUB_OUTPUT

@@ -20,59 +20,15 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  fetch:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: printf 'Hello, world!\n'
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          printf 'What is in this directory?\n'
-          ls -la
-          printf 'Disk df'
-          df
-          printf 'Path:\n'
-          echo $PATH
-          printf 'Is Node.js installed?\n'
-          node -v
-          printf 'Is npm installed?\n'
-          npm -v
-          printf 'What version of bash\n'
-          bash --version
-          printf 'Who am I?\n'
-          whoami
-          printf 'Environment variables\n'
-          env
-
-      - name: Install Node packages
-        run: |
-          pushd actions/remote-file-fetch
-          npm i
-          popd
-
-      - name: Build TypeScript code
-        run: |
-          pushd actions/remote-file-fetch
-          npm run build
-          popd
-
-      - name: Run Node script
-        env:
-          K6_JSLIB_S3_URL: 'https://jslib.k6.io/aws/0.14.0/s3.js'
-        run: |
-          pushd actions/remote-file-fetch
-          node ./dist/main.js
-          popd
-
-      - name: List directory
-        run: ls -l ./dist
+        id: download-k6-files
+        uses: ./github/actions/fetch-k6-libs
+        with:
+          artifactory_url: $ARTIFACTORY_URL
+          artifactory_repo: "k6-jslib-utils"
+          bmo_package_name: "@bmo-k6/k6-jslib-utils"
+          k6_lib_tarball_url: "https://github.com/grafana/k6-jslib-utils/archive/refs/tags/v1.4.0.tar.gz"
+          k6_lib_api_url: "https://api.github.com/repos/grafana/k6-jslib-utils/releases/latest"
