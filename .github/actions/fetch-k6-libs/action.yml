@@ -35,10 +35,11 @@ runs:
       remote_version=$(curl -s ${{ inputs.k6_lib_api_url }} | jq -r ".tag_name")
       printf "Current version: %s\n" $current_version
       printf "Latest version: %s\n" $remote_version
-      echo "current_version=$current_version" >> GITHUB_OUTPUT
-      echo "remote_version=$remote_version" >> GITHUB_OUTPUT
+      echo "current_version=$current_version" >> $GITHUB_OUTPUT
+      echo "remote_version=$remote_version" >> $GITHUB_OUTPUT
 
-  - name: Download
+  - name: Download K6 tarball
+    id: download_k6_tarball
     shell: bash
     run: |
       cd ${{ github.action_path }}
@@ -51,31 +52,41 @@ runs:
       tar -xf *.tar.gz
       echo "Listing build artifacts"
       DIR=$(ls -d k6-*|head -n 1)
-      ls -l $DIR/build
+      if [[ -d $DIR/build ]]; then
+        ls -l $DIR/build
+        echo "build_folder=$DIR/build >> $GITHUB_OUTPUT
+      else
+        echo "build_folder="" >> $GITHUB_OUTPUT
+      fi
+
 
   - name: Create a NPM package
     shell: bash
     run: |
-      echo "Creating package.json file"
-      mkdir npm-package
-      cd npm-package
-      remote_version=${{ steps.get_version.outputs.remote_version }}
-      cat << EOF > package.json
-      {
-        "name": "test",
-        "version": ,
-        "description": "$remote_version",
-        "main": "index.js",
-        "scripts": {
-          "test": "echo \"Error: no test specified\" && exit 1"
-        },
-        "keywords": [],
-        "author": "",
-        "license": "ISC",
-        "type": "commonjs"
-      }
-      EOF
-      echo "Displaying package.json"
-      cat package.json
+      if [[ -n ${{ steps.download_k6_tarball.output.build_folder }} ]]; then
+        echo "Creating package.json file"
+        mkdir npm-package
+        cd npm-package
+        remote_version=${{ steps.get_version.outputs.remote_version }}
+        cat << EOF > package.json
+        {
+          "name": "test",
+          "version": ,
+          "description": "$remote_version",
+          "main": "index.js",
+          "scripts": {
+            "test": "echo \"Error: no test specified\" && exit 1"
+          },
+          "keywords": [],
+          "author": "",
+          "license": "ISC",
+          "type": "commonjs"
+        }
+        EOF
+        echo "Displaying package.json"
+        cat package.json
+      else
+        echo "No build artifact exist"
+      fi
 
 
