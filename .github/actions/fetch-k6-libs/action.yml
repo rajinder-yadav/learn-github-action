@@ -32,8 +32,23 @@ runs:
     shell: bash
     run: |
       current_version="0.1.0"
-      remote_version=(curl -s ${{ inputs.k6_lib_api_url }}) | jq -r ".tag_name"
+      remote_version=$(curl -s ${{ inputs.k6_lib_api_url }} | jq -r ".tag_name")
       printf "Current version: %s\n" $current_version
       printf "Latest version: %s\n" $remote_version
       echo "current_version=$current_version" > GITHUB_OUTPUT
       echo "remote_version=$remote_version" > GITHUB_OUTPUT
+
+  - name: Download
+    shell: bash
+    run: |
+      cd ${{ github.action_path }}
+      mkdir download
+      cd download
+      echo "Downloading K6 libary tarball"
+      curl -LO ${{ inputs.k6_lib_tarball_url }}
+      ls -l
+      echo "Expanding K6 tarball download"
+      tar -xf *.tar.gz
+      echo "Listing build artifacts"
+      DIR=$(ls -d k6-*|head -n 1)
+      ls -l $DIR/build
