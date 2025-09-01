@@ -69,15 +69,21 @@ runs:
         remote_version=${{ steps.get_version.outputs.remote_version }}
         mkdir npm-package
         cd npm-package
-        cat << 'EOF' > package.json
+        cat << EOF > package.json
         {
-          "name": "test",
-          "version": $remove_version,
-          "description": "BMO K6 wrapper library",
+          "name": "sandbox",
+          "version": "1.0.0",
+          "description": "",
           "main": "index.js",
+          "scripts": {
+            "test": "echo \"Error: no test specified\" && exit 1"
+          },
+          "keywords": [],
+          "author": "",
+          "license": "ISC",
           "type": "commonjs"
         }
-        EOF
+EOF
         echo "Displaying package.json"
         cat package.json
       else
