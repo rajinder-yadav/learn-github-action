@@ -69,7 +69,7 @@ runs:
         remote_version=${{ steps.get_version.outputs.remote_version }}
         mkdir npm-package
         cd npm-package
-        cat << EOF > package.json
+        cat << 'EOF' > package.json
         {
           "name": "test",
           "version": $remove_version,
