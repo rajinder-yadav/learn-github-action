@@ -35,8 +35,8 @@ runs:
       remote_version=$(curl -s ${{ inputs.k6_lib_api_url }} | jq -r ".tag_name")
       printf "Current version: %s\n" $current_version
       printf "Latest version: %s\n" $remote_version
-      echo "current_version=$current_version" > GITHUB_OUTPUT
-      echo "remote_version=$remote_version" > GITHUB_OUTPUT
+      echo "current_version=$current_version" >> GITHUB_OUTPUT
+      echo "remote_version=$remote_version" >> GITHUB_OUTPUT
 
   - name: Download
     shell: bash
