@@ -66,21 +66,15 @@ runs:
       echo ">> " ${{ steps.download_k6_tarball.outputs.build_folder }}
       if [[ -n ${{ steps.download_k6_tarball.outputs.build_folder }} ]]; then
         echo "Creating package.json file"
+        remote_version=${{ steps.get_version.outputs.remote_version }}
         mkdir npm-package
         cd npm-package
-        remote_version=${{ steps.get_version.outputs.remote_version }}
-        cat << "EOF" > package.json
+        cat << EOF > package.json
         {
           "name": "test",
-          "version": ,
+          "version": $remove_version,
           "description": "$remote_version",
           "main": "index.js",
-          "scripts": {
-            "test": "echo \"Error: no test specified\" && exit 1"
-          },
-          "keywords": [],
-          "author": "",
-          "license": "ISC",
           "type": "commonjs"
         }
         EOF
