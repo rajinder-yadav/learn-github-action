@@ -33,8 +33,15 @@ runs:
     run: |
       current_version="0.1.0"
       remote_version=$(curl -s ${{ inputs.k6_lib_api_url }} | jq -r ".tag_name")
+      remote_version=${remote_version#v}
       printf "Current version: %s\n" $current_version
       printf "Latest version: %s\n" $remote_version
+      first=$(printf '%s\n' "$remote_version" "$current_version" | sort -V | head -n1)
+      if [[ $first == "$remote_version" ]]; then
+        echo "download_tarball=false" >> $GITHUB_OUTPUT
+      else
+        echo "download_tarball=true" >> $GITHUB_OUTPUT
+      fi
       echo "current_version=$current_version" >> $GITHUB_OUTPUT
       echo "remote_version=$remote_version" >> $GITHUB_OUTPUT
 
@@ -42,6 +49,7 @@ runs:
     id: download_k6_tarball
     shell: bash
     run: |
+      if: ${{ steps.get_version.outputs.download_tarball != 'false' }}
       cd ${{ github.action_path }}
       mkdir download
       cd download
@@ -63,6 +71,7 @@ runs:
   - name: Create a NPM package
     shell: bash
     run: |
+      if: ${{ steps.get_version.outputs.download_tarball != 'false' }}
       echo ">> " ${{ steps.download_k6_tarball.outputs.build_folder }}
       if [[ -n ${{ steps.download_k6_tarball.outputs.build_folder }} ]]; then
       echo "Creating package.json file"
