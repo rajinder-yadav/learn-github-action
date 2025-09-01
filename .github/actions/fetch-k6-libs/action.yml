@@ -65,29 +65,29 @@ runs:
     run: |
       echo ">> " ${{ steps.download_k6_tarball.outputs.build_folder }}
       if [[ -n ${{ steps.download_k6_tarball.outputs.build_folder }} ]]; then
-        echo "Creating package.json file"
-        remote_version=${{ steps.get_version.outputs.remote_version }}
-        mkdir npm-package
-        cd npm-package
-        cat << EOF > package.json
-        {
-          "name": "sandbox",
-          "version": "1.0.0",
-          "description": "",
-          "main": "index.js",
-          "scripts": {
-            "test": "echo \"Error: no test specified\" && exit 1"
-          },
-          "keywords": [],
-          "author": "",
-          "license": "ISC",
-          "type": "commonjs"
-        }
-EOF
-        echo "Displaying package.json"
-        cat package.json
+      echo "Creating package.json file"
+      remote_version=${{ steps.get_version.outputs.remote_version }}
+      mkdir npm-package
+      cd npm-package
+      cat << EOF > package.json
+      {
+        "name": "sandbox",
+        "version": "1.0.0",
+        "description": "",
+        "main": "index.js",
+        "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "keywords": [],
+        "author": "",
+        "license": "ISC",
+        "type": "commonjs"
+      }
+      EOF
+      echo "Displaying package.json"
+      cat package.json
       else
-        echo "No build artifact exist"
+      echo "No build artifact exist"
       fi
 
 
